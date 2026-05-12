@@ -35,6 +35,10 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/0001-fix-undefined-uint8.patch"
+)
+
 src_prepare() {
 	# adpcm is a git submodule in-tree, and thus not included in the
 	# github-generated source bundle. We move it in here.
