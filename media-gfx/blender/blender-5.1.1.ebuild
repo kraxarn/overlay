@@ -55,6 +55,7 @@ if [[ "${PV}" == *9999* ]]; then
 else
 	SRC_URI="
 		https://download.blender.org/source/${P}.tar.xz
+		https://github.com/DLTcollab/sse2neon/archive/refs/tags/v1.9.1.tar.gz -> ${P}-sse2neon-1.9.1.tar.gz
 		test? (
 			https://download.blender.org/source/blender-test-data-${BLENDER_BRANCH}.0.tar.xz
 		)
@@ -558,6 +559,8 @@ src_configure() {
 		-DWITH_RUBBERBAND="$(usex rubberband)"
 		# -DPOSTINSTALL_SCRIPT:PATH=""
 		# -DPOSTCONFIGURE_SCRIPT:PATH=""
+
+		-DSSE2NEON_INCLUDE_DIR="${WORKDIR}/sse2neon-1.9.1"
 	)
 
 	if has_version ">=dev-python/numpy-2"; then
