@@ -12,6 +12,7 @@ HOMEPAGE="https://github.com/tildearrow/furnace"
 # version of adpcm. adpcm doesn't seem to update frequently.
 SRC_URI="
 	https://github.com/tildearrow/furnace/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
+	https://github.com/superctr/adpcm/archive/ef7a217154badc3b99978ac481b268c8aab67bd8.tar.gz -> ${P}-adpcm-ef7a217.tar.gz
 "
 LICENSE="GPL-2+"
 SLOT="0"
@@ -34,11 +35,12 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/0001-fix-undefined-uint8.patch"
-)
-
 src_prepare() {
+	# adpcm is a git submodule in-tree, and thus not included in the
+	# github-generated source bundle. We move it in here.
+	rmdir -v "${S}/extern/adpcm" || die "couldn't remove existing adpcm stub directory"
+	mv -v "${WORKDIR}/adpcm-"* "${S}/extern/adpcm" || die "failed to move adpcm directory into place"
+
 	cmake_src_prepare
 }
 
