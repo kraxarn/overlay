@@ -1,6 +1,8 @@
 # Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
+# https://codeberg.org/gentoo/guru/src/branch/master/media-sound/furnace
+
 EAPI=8
 
 inherit cmake xdg
