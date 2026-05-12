@@ -45,6 +45,7 @@ CDEPEND="
 	net-libs/tdlib:=[tde2e]
 	virtual/minizip:=
 	kde-frameworks/kcoreaddons:6
+	virtual/zlib:=
 	!enchant? ( >=app-text/hunspell-1.7:= )
 	enchant? ( app-text/enchant:= )
 	libdispatch? ( dev-libs/libdispatch )
