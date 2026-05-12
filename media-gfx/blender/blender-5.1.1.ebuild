@@ -127,6 +127,7 @@ RDEPEND="${PYTHON_DEPS}
 	virtual/libintl
 	virtual/opengl[X?]
 	virtual/zlib:=
+	sci-libs/ceres-solver:=
 	alembic? ( >=media-gfx/alembic-1.8.3-r2[boost(+),hdf(+)] )
 	bullet? ( sci-physics/bullet:=[double-precision] )
 	color-management? ( >=media-libs/opencolorio-2.4.2:= )
