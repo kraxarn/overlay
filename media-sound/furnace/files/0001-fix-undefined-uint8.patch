@@ -1,0 +1,11 @@
+diff --git a/src/engine/platform/sound/ymf278b/ymf278.h b/src/engine/platform/sound/ymf278b/ymf278.h
+--- a/src/engine/platform/sound/ymf278b/ymf278.h	(revision f2619dbd988c92bf9c7173648d191648f60aecbf)
++++ b/src/engine/platform/sound/ymf278b/ymf278.h	(date 1778612119135)
+@@ -4,6 +4,7 @@
+ #include <vector>
+ #include <string>
+ #include <algorithm>
++#include <cstdint>
+
+ #define UNREACHABLE while (1) assert(false)
+
