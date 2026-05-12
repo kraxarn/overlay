@@ -1,0 +1,43 @@
+diff --git a/build_files/cmake/Modules/FindClang.cmake b/build_files/cmake/Modules/FindClang.cmake
+--- a/build_files/cmake/Modules/FindClang.cmake	(revision b70da489d7f4eae7760cc0a50cc6c60cd5464205)
++++ b/build_files/cmake/Modules/FindClang.cmake	(date 1778615317046)
+@@ -54,37 +54,8 @@
+
+
+ set(_clang_FIND_COMPONENTS
+-  clangDependencyScanning
+-  clangDynamicASTMatchers
+-  clangFrontendTool
+-  clangStaticAnalyzerFrontend
+-  clangHandleCXX
+-  clangStaticAnalyzerCheckers
+-  clangStaticAnalyzerCore
+-  clangToolingASTDiff
+-  clangToolingRefactoring
+-  clangToolingSyntax
+-  clangARCMigrate
+-  clangCodeGen
+-  clangCrossTU
+-  clangIndex
+-  clangTooling
+-  clangFormat
+-  clangToolingInclusions
+-  clangRewriteFrontend
+-  clangFrontend
+-  clangSerialization
+-  clangDriver
+-  clangToolingCore
+-  clangParse
+-  clangRewrite
+-  clangSema
+-  clangEdit
+-  clangAnalysis
+-  clangASTMatchers
+-  clangAST
+-  clangLex
+-  clangBasic
++	clang
++	clang-cpp
+ )
+
+ set(_clang_LIBRARIES "")
