@@ -216,6 +216,7 @@ RDEPEND="${PYTHON_DEPS}
 "
 
 DEPEND="${RDEPEND}
+	dev-cpp/eigen:=
 	test? (
 		$(python_gen_cond_dep '
 			media-libs/openimageio[jpeg2k,python,${PYTHON_SINGLE_USEDEP},tools]
