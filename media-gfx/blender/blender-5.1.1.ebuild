@@ -56,7 +56,6 @@ else
 	SRC_URI="
 		https://download.blender.org/source/${P}.tar.xz
 		https://github.com/DLTcollab/sse2neon/archive/refs/tags/v1.9.1.tar.gz -> ${P}-sse2neon-1.9.1.tar.gz
-        https://gitlab.com/libeigen/eigen/-/archive/8a1083e9bf41b91fdea6546681f806154efdc25a/eigen-8a1083e9bf41b91fdea6546681f806154efdc25a.tar.gz -> ${P}-eigen-8a1083e9.tar.gz
 		test? (
 			https://download.blender.org/source/blender-test-data-${BLENDER_BRANCH}.0.tar.xz
 		)
@@ -261,7 +260,8 @@ BDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/${PN}-5.1.1-findclang.patch"
+	"${FILESDIR}/0001-findclang.patch"
+	"${FILESDIR}/0002-fix-eigen3-call.patch"
 )
 
 blender_check_requirements() {
@@ -461,7 +461,7 @@ src_configure() {
 		-DWITH_XR_OPENXR="no"
 
 		-DWITH_SYSTEM_BULLET="yes"
-		-DWITH_SYSTEM_EIGEN3="no"
+		-DWITH_SYSTEM_EIGEN3="yes"
 		-DWITH_SYSTEM_FREETYPE="yes"
 		-DWITH_SYSTEM_GFLAGS="yes"
 		-DWITH_SYSTEM_GLOG="yes"
@@ -563,7 +563,6 @@ src_configure() {
 		# -DPOSTCONFIGURE_SCRIPT:PATH=""
 
 		-DSSE2NEON_INCLUDE_DIR="${WORKDIR}/sse2neon-1.9.1"
-		-DEIGEN3_INCLUDE_DIR="${WORKDIR}/eigen-8a1083e9bf41b91fdea6546681f806154efdc25a"
 	)
 
 	if has_version ">=dev-python/numpy-2"; then

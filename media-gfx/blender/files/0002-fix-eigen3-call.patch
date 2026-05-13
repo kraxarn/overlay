@@ -1,0 +1,12 @@
+diff --git a/intern/libmv/libmv/multiview/euclidean_resection.cc b/intern/libmv/libmv/multiview/euclidean_resection.cc
+--- a/intern/libmv/libmv/multiview/euclidean_resection.cc
++++ b/intern/libmv/libmv/multiview/euclidean_resection.cc
+@@ -107,7 +107,7 @@
+
+   // Find the unit quaternion q that maximizes qNq. It is the eigenvector
+   // corresponding to the lagest eigenvalue.
+-  Vec4 q = N.jacobiSvd<Eigen::ComputeFullU>().matrixU().col(0);
++  Vec4 q = N.jacobiSvd(Eigen::ComputeFullU).matrixU().col(0);
+
+   // Retrieve the 3x3 rotation matrix.
+   Vec4 qq = q.array() * q.array();
