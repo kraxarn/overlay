@@ -79,6 +79,10 @@ BDEPEND="
 "
 # NOTE: dev-cpp/expected-lite used indirectly by a dev-cpp/cppgir header file
 
+PATCHES=(
+	"${FILESDIR}/0001-fix-zlib-path.patch"
+)
+
 pkg_pretend() {
 	if [[ ${MERGE_TYPE} != binary ]]; then
 		if has ccache ${FEATURES}; then
