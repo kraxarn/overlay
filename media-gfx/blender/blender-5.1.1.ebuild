@@ -56,6 +56,7 @@ else
 	SRC_URI="
 		https://download.blender.org/source/${P}.tar.xz
 		https://github.com/DLTcollab/sse2neon/archive/refs/tags/v1.9.1.tar.gz -> ${P}-sse2neon-1.9.1.tar.gz
+        https://gitlab.com/libeigen/eigen/-/archive/8a1083e9bf41b91fdea6546681f806154efdc25a/eigen-8a1083e9bf41b91fdea6546681f806154efdc25a.tar.gz -> ${P}-eigen-8a1083e9.tar.gz
 		test? (
 			https://download.blender.org/source/blender-test-data-${BLENDER_BRANCH}.0.tar.xz
 		)
@@ -215,7 +216,6 @@ RDEPEND="${PYTHON_DEPS}
 "
 
 DEPEND="${RDEPEND}
-	dev-cpp/eigen:=
 	test? (
 		$(python_gen_cond_dep '
 			media-libs/openimageio[jpeg2k,python,${PYTHON_SINGLE_USEDEP},tools]
@@ -562,6 +562,7 @@ src_configure() {
 		# -DPOSTCONFIGURE_SCRIPT:PATH=""
 
 		-DSSE2NEON_INCLUDE_DIR="${WORKDIR}/sse2neon-1.9.1"
+		-DEIGEN3_INCLUDE_DIR="${WORKDIR}/eigen-8a1083e9bf41b91fdea6546681f806154efdc25a"
 	)
 
 	if has_version ">=dev-python/numpy-2"; then
