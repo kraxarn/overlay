@@ -161,7 +161,7 @@ RDEPEND="${PYTHON_DEPS}
 	openpgl? ( media-libs/openpgl:= )
 	opensubdiv? ( >=media-libs/opensubdiv-3.6.0-r2:=[opengl,cuda?,tbb?] )
 	openvdb? (
-		>=media-gfx/openvdb-11.0.0:=[nanovdb?]
+		>=media-gfx/openvdb-13.0.0:=[nanovdb?]
 		dev-libs/c-blosc:=
 	)
 	optix? (
