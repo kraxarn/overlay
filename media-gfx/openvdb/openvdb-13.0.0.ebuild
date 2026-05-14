@@ -160,6 +160,10 @@ BDEPEND="
 	)
 "
 
+PATCHES=(
+	"${FILESDIR}/0001-cmake-fixes.patch"
+)
+
 cuda_get_host_compiler() {
 	if [[ -v NVCC_CCBIN ]]; then
 		echo "${NVCC_CCBIN}"
