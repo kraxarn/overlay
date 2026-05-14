@@ -55,7 +55,9 @@ if [[ "${PV}" == *9999* ]]; then
 else
 	SRC_URI="
 		https://download.blender.org/source/${P}.tar.xz
-		https://github.com/DLTcollab/sse2neon/archive/refs/tags/v1.9.1.tar.gz -> ${P}-sse2neon-1.9.1.tar.gz
+		arm64? (
+			https://github.com/DLTcollab/sse2neon/archive/refs/tags/v1.9.1.tar.gz -> ${P}-sse2neon-1.9.1.tar.gz
+		)
 		test? (
 			https://download.blender.org/source/blender-test-data-${BLENDER_BRANCH}.0.tar.xz
 		)
