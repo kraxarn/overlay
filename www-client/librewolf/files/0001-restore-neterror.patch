@@ -1,0 +1,11 @@
+diff --git a/assets/patches.txt b/assets/patches.txt
+--- a/assets/patches.txt
++++ b/assets/patches.txt
+@@ -35,7 +35,6 @@
+ patches/ui-patches/hide-finish-setup-bookmark.patch
+ patches/ui-patches/home-preferences.patch
+ patches/ui-patches/lw-logo-devtools.patch
+-patches/ui-patches/neterror.patch
+ patches/ui-patches/pref-naming.patch
+ patches/ui-patches/privacy-preferences.patch
+ patches/ui-patches/remove-cfrprefs.patch
