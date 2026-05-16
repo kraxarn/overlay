@@ -22,8 +22,3 @@ Should probably be merged upstream, but I'm still learning how all this works
 
 * Updated to the latest version.
 * Fixed some int definitions.
-
-### net-im/telegram-desktop
-
-* Updated to the latest version (also fixes [#974483](https://bugs.gentoo.org/974483)).
-* Fixed some zlib issues in more recent versions.
