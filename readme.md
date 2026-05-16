@@ -1,6 +1,11 @@
-My modified/updated packages from https://codeberg.org/gentoo/guru and https://codeberg.org/gentoo/gentoo
-
+My modified/updated packages.
 Should probably be merged upstream, but I'm still learning how all this works
+
+## Sources
+
+* https://codeberg.org/gentoo/guru
+* https://codeberg.org/gentoo/gentoo
+* https://codeberg.org/librewolf/gentoo
 
 ## Changes
 
