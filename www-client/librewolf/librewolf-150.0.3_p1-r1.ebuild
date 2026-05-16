@@ -189,7 +189,7 @@ DEPEND="${COMMON_DEPEND}
 	)"
 
 PATCHES=(
-	"${FILESDIR}/0001-restore-neterror.patch"
+	"${FILESDIR}/0050-restore-neterror.patch"
 )
 
 # Allow MOZ_GMP_PLUGIN_LIST to be set in an eclass or
