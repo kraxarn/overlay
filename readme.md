@@ -5,7 +5,6 @@ Should probably be merged upstream, but I'm still learning how all this works
 
 * https://codeberg.org/gentoo/guru
 * https://codeberg.org/gentoo/gentoo
-* https://codeberg.org/librewolf/gentoo
 
 ## Changes
 
@@ -28,7 +27,3 @@ Should probably be merged upstream, but I'm still learning how all this works
 
 * Updated to the latest version (also fixes [#974483](https://bugs.gentoo.org/974483)).
 * Fixed some zlib issues in more recent versions.
-
-### www-client/librewolf
-
-* Restored some Firefox "Kit" branding, at least until LibreWolf provides their own (I just think it's too cute to remove).
