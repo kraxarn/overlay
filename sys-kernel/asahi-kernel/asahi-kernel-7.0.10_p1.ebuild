@@ -1,6 +1,7 @@
-# Copyright 2020-2025 Gentoo Authors
+# Copyright 2020-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
+# https://github.com/chadmed/asahi-overlay/tree/main/sys-kernel/asahi-kernel
 # https://github.com/ccharon/gentoo-local-repo/tree/main/sys-kernel/asahi-kernel
 
 EAPI=8
@@ -17,23 +18,27 @@ inherit kernel-build rust toolchain-funcs verify-sig
 
 BASE_P=linux-${PV%.*}
 PATCH_PV=${PV%_p*}
-PATCHSET=linux-gentoo-patches-7.0.10
+PATCHSET=linux-gentoo-patches-${PATCH_PV}_p1
 # https://koji.fedoraproject.org/koji/packageinfo?packageID=8
 # forked to git.gentoo.org:fork/fedora/kernel
 CONFIG_VER=7.0.8-gentoo
-GENTOO_CONFIG_VER=g18
-SHA256SUM_DATE=20260404
+GENTOO_CONFIG_P=gentoo-kernel-config-g18
+SHA256SUM_DATE=20260517
 
 # asahi specific tag and version parsing
 # ASAHI_TAGV=${PV#*_p}
-#ASAHI_TAG="asahi-${PATCH_PV}-${ASAHI_TAGV}"
+# ASAHI_TAG="asahi-${PATCH_PV}-${ASAHI_TAGV}"
 
 # fairydust
 ASAHI_TAG=ce3b823962dc839c5d5b0b8198f75bd8c60aeea3
 
-# BASE_ASAHI_TAG is the first used TAG of specific release, i.e. usually
+# ASAHI_BASE is used for when there are multiple asahi tags for a specific
+# kernel release. If this is not the case comment "ASAHI_BASE=..." and all
+# which reference "${ASAHI_BASE_TAG}..${ASAHI_TAG}"
+# ASAHI_BASE=1
+# ASAHI_BASE_TAG is the first used TAG of specific release, i.e. usually
 # the first tag of a linux 6.x or linux stable 6.x.y release
-#BASE_ASAHI_TAG="asahi-${MY_BASE}-3"
+# ASAHI_BASE_TAG="asahi-${PATCH_PV}-${ASAHI_BASE:-${ASAHI_TAGV}}"
 BASE_ASAHI_TAG="${ASAHI_TAG}"
 
 DESCRIPTION="Linux kernel built with Asahi and Gentoo patches"
@@ -42,16 +47,14 @@ HOMEPAGE="
 	https://wiki.gentoo.org/wiki/Project:Distribution_Kernel
 	https://www.kernel.org/
 "
-
 SRC_URI+="
 	https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/${BASE_P}.tar.xz
 	https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/patch-${PATCH_PV}.xz
-	https://dev.gentoo.org/~mgorny/dist/linux/${PATCHSET}.tar.xz
-	https://github.com/projg2/gentoo-kernel-config/archive/${GENTOO_CONFIG_VER}.tar.gz
-		-> gentoo-kernel-config-${GENTOO_CONFIG_VER}.tar.gz
-	https://github.com/AsahiLinux/linux/compare/v${PATCH_PV}...${BASE_ASAHI_TAG}.diff
-		-> linux-${BASE_ASAHI_TAG}.diff
+	https://distfiles.gentoo.org/pub/proj/dist-kernel/patchsets/$(ver_cut 1-2)/${PATCHSET}.tar.xz
+	https://gitweb.gentoo.org/proj/dist-kernel/gentoo-kernel-config.git/snapshot/${GENTOO_CONFIG_P}.tar.bz2
 	https://gitweb.gentoo.org/fork/fedora/kernel.git/snapshot/kernel-${CONFIG_VER}.tar.bz2
+	https://github.com/AsahiLinux/linux/compare/v${PATCH_PV}...${ASAHI_BASE_TAG}.diff
+		-> linux-${ASAHI_BASE_TAG}.diff
 	verify-sig? (
 		https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/sha256sums.asc
 			-> linux-$(ver_cut 1).x-sha256sums-${SHA256SUM_DATE}.asc
@@ -120,7 +123,7 @@ src_prepare() {
 		fi
 	done
 
-	eapply "${DISTDIR}/linux-${BASE_ASAHI_TAG}.diff"
+	eapply "${DISTDIR}/linux-${ASAHI_BASE_TAG}.diff"
 
 	default
 
@@ -166,7 +169,7 @@ src_prepare() {
 	local myversion="-asahi-dist"
 	use hardened && myversion+="-hardened"
 	echo "CONFIG_LOCALVERSION=\"${myversion}\"" > "${T}"/version.config || die
-	local dist_conf_path="${WORKDIR}/gentoo-kernel-config-${GENTOO_CONFIG_VER}"
+	local dist_conf_path="${WORKDIR}/${GENTOO_CONFIG_P}"
 
 	local merge_configs=(
 		"${T}"/version.config
