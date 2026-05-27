@@ -39,7 +39,7 @@ ASAHI_TAG=ce3b823962dc839c5d5b0b8198f75bd8c60aeea3
 # ASAHI_BASE_TAG is the first used TAG of specific release, i.e. usually
 # the first tag of a linux 6.x or linux stable 6.x.y release
 # ASAHI_BASE_TAG="asahi-${PATCH_PV}-${ASAHI_BASE:-${ASAHI_TAGV}}"
-BASE_ASAHI_TAG="${ASAHI_TAG}"
+ASAHI_BASE_TAG="${ASAHI_TAG}"
 
 DESCRIPTION="Linux kernel built with Asahi and Gentoo patches"
 HOMEPAGE="
