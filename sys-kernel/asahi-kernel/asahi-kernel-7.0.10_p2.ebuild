@@ -25,18 +25,17 @@ GENTOO_CONFIG_P=gentoo-kernel-config-g18
 SHA256SUM_DATE=20260517
 
 # asahi specific tag and version parsing
-# ASAHI_TAGV=${PV#*_p}
+ASAHI_TAGV=${PV#*_p}
 # ASAHI_TAG="asahi-${PATCH_PV}-${ASAHI_TAGV}"
 ASAHI_TAG=ce3b823962dc839c5d5b0b8198f75bd8c60aeea3
 
 # ASAHI_BASE is used for when there are multiple asahi tags for a specific
 # kernel release. If this is not the case comment "ASAHI_BASE=..." and all
 # which reference "${ASAHI_BASE_TAG}..${ASAHI_TAG}"
-# ASAHI_BASE=1
+ASAHI_BASE=1
 # ASAHI_BASE_TAG is the first used TAG of specific release, i.e. usually
 # the first tag of a linux 6.x or linux stable 6.x.y release
-# ASAHI_BASE_TAG="asahi-${PATCH_PV}-${ASAHI_BASE:-${ASAHI_TAGV}}"
-ASAHI_BASE_TAG="${ASAHI_TAG}"
+ASAHI_BASE_TAG="asahi-${PATCH_PV}-${ASAHI_BASE:-${ASAHI_TAGV}}"
 
 DESCRIPTION="Linux kernel built with Asahi and Gentoo patches"
 HOMEPAGE="
@@ -52,6 +51,8 @@ SRC_URI+="
 	https://gitweb.gentoo.org/fork/fedora/kernel.git/snapshot/kernel-${CONFIG_VER}.tar.bz2
 	https://github.com/AsahiLinux/linux/compare/v${PATCH_PV}...${ASAHI_BASE_TAG}.diff
 		-> linux-${ASAHI_BASE_TAG}.diff
+	https://github.com/AsahiLinux/linux/compare/${ASAHI_BASE_TAG}...${ASAHI_TAG}.diff
+		-> linux-${ASAHI_BASE_TAG}..${ASAHI_TAG}.diff
 	verify-sig? (
 		https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/sha256sums.asc
 			-> linux-$(ver_cut 1).x-sha256sums-${SHA256SUM_DATE}.asc
@@ -111,6 +112,7 @@ src_prepare() {
 	eapply "${WORKDIR}/${PATCHSET}"
 
 	eapply "${DISTDIR}/linux-${ASAHI_BASE_TAG}.diff"
+	eapply "${DISTDIR}/linux-${ASAHI_BASE_TAG}..${ASAHI_TAG}.diff"
 
 	default
 
