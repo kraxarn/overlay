@@ -136,26 +136,26 @@ src_prepare() {
 			> .config || die
 		;;
 		amd64)
-			cp "${DISTDIR}/kernel-x86_64-fedora.config.${CONFIG_VER}" .config || die
+			cp "${WORKDIR}/kernel-${CONFIG_VER}/kernel-x86_64-fedora.config" .config || die
 			;;
 		arm64)
-			cp "${DISTDIR}/kernel-aarch64-fedora.config.${CONFIG_VER}" .config || die
+			cp "${WORKDIR}/kernel-${CONFIG_VER}/kernel-aarch64-fedora.config" .config || die
 			biendian=true
 			;;
 		ppc)
 			# assume powermac/powerbook defconfig
 			# we still package.use.force savedconfig
-			cp "${WORKDIR}/${BASE_P}/arch/powerpc/configs/pmac32_defconfig" .config || die
+			cp "arch/powerpc/configs/pmac32_defconfig" .config || die
 			;;
 		ppc64)
-			cp "${DISTDIR}/kernel-ppc64le-fedora.config.${CONFIG_VER}" .config || die
+			cp "${WORKDIR}/kernel-${CONFIG_VER}/kernel-ppc64le-fedora.config" .config || die
 			biendian=true
 			;;
 		riscv)
-			cp "${DISTDIR}/kernel-riscv64-fedora.config.${CONFIG_VER}" .config || die
+			cp "${WORKDIR}/kernel-${CONFIG_VER}/kernel-riscv64-fedora.config" .config || die
 			;;
 		x86)
-			cp "${DISTDIR}/kernel-i686-fedora.config.${CONFIG_VER}" .config || die
+			cp "${WORKDIR}/kernel-${CONFIG_VER}/kernel-i686-fedora.config" .config || die
 			;;
 		*)
 			die "Unsupported arch ${ARCH}"
