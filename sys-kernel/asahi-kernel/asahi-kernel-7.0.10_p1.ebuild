@@ -2,7 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 # https://github.com/chadmed/asahi-overlay/tree/main/sys-kernel/asahi-kernel
-# https://github.com/ccharon/gentoo-local-repo/tree/main/sys-kernel/asahi-kernel
 
 EAPI=8
 K_SECURITY_UNSUPPORTED="1"
@@ -28,8 +27,6 @@ SHA256SUM_DATE=20260517
 # asahi specific tag and version parsing
 # ASAHI_TAGV=${PV#*_p}
 # ASAHI_TAG="asahi-${PATCH_PV}-${ASAHI_TAGV}"
-
-# fairydust
 ASAHI_TAG=ce3b823962dc839c5d5b0b8198f75bd8c60aeea3
 
 # ASAHI_BASE is used for when there are multiple asahi tags for a specific
@@ -64,11 +61,10 @@ S=${WORKDIR}/${BASE_P}
 
 LICENSE="GPL-2"
 SLOT="asahi-${PV}"
+
 KEYWORDS="~arm64"
-IUSE="debug experimental hardened"
-# mask untested USE flags
+IUSE="debug hardened"
 REQUIRED_USE="
-	arm64? ( !experimental !secureboot )
 	arm? ( savedconfig )
 	hppa? ( savedconfig )
 	sparc? ( savedconfig )
@@ -112,16 +108,7 @@ src_unpack() {
 src_prepare() {
 	local patch
 	eapply "${WORKDIR}/patch-${PATCH_PV}"
-	for patch in "${WORKDIR}/${PATCHSET}"/*.patch; do
-		eapply "${patch}"
-		# non-experimental patches always finish with Gentoo Kconfig
-		# when ! use experimental, stop applying after it
-		if [[ ${patch} == *Add-Gentoo-Linux-support-config-settings* ]] &&
-			! use experimental
-		then
-			break
-		fi
-	done
+	eapply "${WORKDIR}/${PATCHSET}"
 
 	eapply "${DISTDIR}/linux-${ASAHI_BASE_TAG}.diff"
 
