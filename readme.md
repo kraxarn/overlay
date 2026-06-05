@@ -28,3 +28,7 @@ Should probably be merged upstream, but I'm still learning how all this works
 ### sys-kernel/asahi-kernel
 
 * Updated to the latest version.
+
+### media-libs/libvpx
+
+* Restored version 1.9, as required by Steam

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>gentoo@kraxarn.com</email>
+		<description>Primary maintainer</description>
+		<name>kraxarn</name>
+	</maintainer>
+	<use>
+		<flag name="highbitdepth">Enable 10 and 12 bit support for VP9.</flag>
+		<flag name="postproc">Enable additional post processing filters</flag>
+	</use>
+	<upstream>
+		<remote-id type="cpe">cpe:/a:john_koleszar:libvpx</remote-id>
+		<remote-id type="github">webmproject/libvpx</remote-id>
+	</upstream>
+</pkgmetadata>
