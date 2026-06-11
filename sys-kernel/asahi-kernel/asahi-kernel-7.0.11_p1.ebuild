@@ -16,7 +16,8 @@ RUST_REQ_USE='rust-src,rustfmt'
 inherit kernel-build rust toolchain-funcs verify-sig
 
 BASE_P=linux-${PV%.*}
-PATCH_PV=${PV%_p*}
+# PATCH_PV=${PV%_p*}
+PATCH_PV=7.0.9
 PATCHSET=linux-gentoo-patches-${PATCH_PV}_p1
 # https://koji.fedoraproject.org/koji/packageinfo?packageID=8
 # forked to git.gentoo.org:fork/fedora/kernel
