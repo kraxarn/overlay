@@ -27,7 +27,7 @@ SHA256SUM_DATE=20260517
 # asahi specific tag and version parsing
 ASAHI_TAGV=${PV#*_p}
 # ASAHI_TAG="asahi-${PATCH_PV}-${ASAHI_TAGV}"
-ASAHI_TAG=ce3b823962dc839c5d5b0b8198f75bd8c60aeea3
+ASAHI_TAG=77e0fe0c47e847221988f6397167bc23fec2a042
 
 # ASAHI_BASE is used for when there are multiple asahi tags for a specific
 # kernel release. If this is not the case comment "ASAHI_BASE=..." and all
