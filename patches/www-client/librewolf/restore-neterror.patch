@@ -3,18 +3,19 @@ diff --git a/toolkit/themes/shared/aboutNetError.css b/toolkit/themes/shared/abo
 +++ b/toolkit/themes/shared/aboutNetError.css
 @@ -209,7 +209,7 @@
    }
- 
+
    .img-container > img {
 -    width: 3.5em;
 +    width: 8.75em;
      margin-block-start: 2em;
      margin-inline-end: 2.5em;
+
 diff --git a/toolkit/content/errors/net-error-illustrations.mjs b/toolkit/content/errors/net-error-illustrations.mjs
 --- a/toolkit/content/errors/net-error-illustrations.mjs
 +++ b/toolkit/content/errors/net-error-illustrations.mjs
 @@ -3,8 +3,11 @@
   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
- 
+
  export const NET_ERROR_ILLUSTRATIONS = {
 -  noConnection: {},
 +  noConnection: {
