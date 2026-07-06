@@ -7,6 +7,7 @@ Should probably be merged upstream, but I'm still learning how all this works
 * https://codeberg.org/gentoo/gentoo
 * https://github.com/chadmed/asahi-overlay
 * https://github.com/ccharon/gentoo-local-repo
+* https://github.com/anyc/steam-overlay
 
 ## Changes
 
@@ -32,3 +33,7 @@ Should probably be merged upstream, but I'm still learning how all this works
 ### media-libs/libvpx
 
 * Restored version 1.9, as required by Steam
+
+### games-util/steam-launcher
+
+* Removed 32-bit dependencies (for SteamRt3)
