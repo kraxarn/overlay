@@ -49,7 +49,6 @@ RDEPEND="
 		dev-libs/glib:2
 		dev-libs/nspr
 		dev-libs/nss
-		games-util/esteam
 		media-libs/alsa-lib
 		media-libs/freetype
 		media-libs/libpng-compat:1.2
