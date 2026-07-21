@@ -403,7 +403,7 @@ src_prepare() {
 	# Use slotted libhiprt64
 	sed \
 		-e "s|\"libhiprt64.so\"|\"${ESYSROOT}/usr/lib/hiprt/2.5/$(get_libdir)/libhiprt64.so\"|" \
-		-i extern/hipew/src/hiprtew.cc || die
+		-i extern/hipew/src/hipew.c || die
 }
 
 src_configure() {
