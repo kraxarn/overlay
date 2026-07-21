@@ -563,6 +563,8 @@ src_configure() {
 		# -DPOSTCONFIGURE_SCRIPT:PATH=""
 
 		-DSSE2NEON_INCLUDE_DIR="${WORKDIR}/sse2neon-1.9.1"
+		-DWITH_DRACO=OFF
+		-DWITH_MESHOPTIMIZER=OFF
 	)
 
 	if has_version ">=dev-python/numpy-2"; then
