@@ -262,7 +262,6 @@ BDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/0001-findclang.patch"
 )
 
 blender_check_requirements() {
