@@ -263,7 +263,6 @@ BDEPEND="
 
 PATCHES=(
 	"${FILESDIR}/0001-findclang.patch"
-	"${FILESDIR}/0002-fix-eigen3-call.patch"
 )
 
 blender_check_requirements() {
