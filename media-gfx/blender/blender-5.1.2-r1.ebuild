@@ -262,6 +262,8 @@ BDEPEND="
 "
 
 PATCHES=(
+	"${FILESDIR}/0001-findclang.patch"
+	"${FILESDIR}/0002-fix-eigen3-call.patch"
 )
 
 blender_check_requirements() {
@@ -403,7 +405,7 @@ src_prepare() {
 	# Use slotted libhiprt64
 	sed \
 		-e "s|\"libhiprt64.so\"|\"${ESYSROOT}/usr/lib/hiprt/2.5/$(get_libdir)/libhiprt64.so\"|" \
-		-i extern/hipew/src/hipew.c || die
+		-i extern/hipew/src/hiprtew.cc || die
 }
 
 src_configure() {
@@ -563,8 +565,6 @@ src_configure() {
 		# -DPOSTCONFIGURE_SCRIPT:PATH=""
 
 		-DSSE2NEON_INCLUDE_DIR="${WORKDIR}/sse2neon-1.9.1"
-		-DWITH_DRACO=OFF
-		-DWITH_MESHOPTIMIZER=OFF
 	)
 
 	if has_version ">=dev-python/numpy-2"; then
