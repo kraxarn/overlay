@@ -16,19 +16,21 @@ RUST_REQ_USE='rust-src,rustfmt'
 inherit kernel-build rust toolchain-funcs verify-sig
 
 BASE_P=linux-${PV%.*}
-# PATCH_PV=${PV%_p*}
-PATCH_PV=7.0.9
-PATCHSET=linux-gentoo-patches-${PATCH_PV}_p1
+PATCH_PV=${PV%_p*}
+PATCHSET=linux-gentoo-patches-${PATCH_PV}
 # https://koji.fedoraproject.org/koji/packageinfo?packageID=8
 # forked to git.gentoo.org:fork/fedora/kernel
-CONFIG_VER=7.0.8-gentoo
-GENTOO_CONFIG_P=gentoo-kernel-config-g18
-SHA256SUM_DATE=20260517
+CONFIG_VER=7.1.4-gentoo
+GENTOO_CONFIG_P=gentoo-kernel-config-g19
+SHA256SUM_DATE=20260724
+# Debian kconfig commit from:
+# https://salsa.debian.org/kernel-team/linux/-/tree/debian/latest/debian/
+DEBIAN_COMMIT=bbe2e99bce4a7dffe34cf06303aec2fac49fbf56
 
 # asahi specific tag and version parsing
 ASAHI_TAGV=${PV#*_p}
 # ASAHI_TAG="asahi-${PATCH_PV}-${ASAHI_TAGV}"
-ASAHI_TAG=77e0fe0c47e847221988f6397167bc23fec2a042
+ASAHI_TAG=e3e35907c17a05773d481e58a566bf9108166cc5
 
 # ASAHI_BASE is used for when there are multiple asahi tags for a specific
 # kernel release. If this is not the case comment "ASAHI_BASE=..." and all
@@ -50,26 +52,27 @@ SRC_URI+="
 	https://distfiles.gentoo.org/pub/proj/dist-kernel/patchsets/$(ver_cut 1-2)/${PATCHSET}.tar.xz
 	https://gitweb.gentoo.org/proj/dist-kernel/gentoo-kernel-config.git/snapshot/${GENTOO_CONFIG_P}.tar.bz2
 	https://gitweb.gentoo.org/fork/fedora/kernel.git/snapshot/kernel-${CONFIG_VER}.tar.bz2
+	https://salsa.debian.org/kernel-team/linux/-/archive/${DEBIAN_COMMIT}/linux-${DEBIAN_COMMIT}.tar.bz2
 	https://github.com/AsahiLinux/linux/compare/v${PATCH_PV}...${ASAHI_BASE_TAG}.diff
 		-> linux-${ASAHI_BASE_TAG}.diff
-	https://github.com/AsahiLinux/linux/compare/${ASAHI_BASE_TAG}...${ASAHI_TAG}.diff
-		-> linux-${ASAHI_BASE_TAG}..${ASAHI_TAG}.diff
 	verify-sig? (
 		https://cdn.kernel.org/pub/linux/kernel/v$(ver_cut 1).x/sha256sums.asc
 			-> linux-$(ver_cut 1).x-sha256sums-${SHA256SUM_DATE}.asc
 	)
 "
+SRC_URI+="
+	https://github.com/AsahiLinux/linux/compare/${ASAHI_BASE_TAG}...${ASAHI_TAG}.diff
+		-> linux-${ASAHI_BASE_TAG}..${ASAHI_TAG}.diff
+"
 S=${WORKDIR}/${BASE_P}
 
-LICENSE="GPL-2"
 SLOT="asahi-${PV}"
 
 KEYWORDS="~arm64"
 IUSE="debug hardened"
 REQUIRED_USE="
-	arm? ( savedconfig )
 	hppa? ( savedconfig )
-	sparc? ( savedconfig )
+	mips? ( savedconfig )
 "
 
 # Rust is non-negotiable for the dist kernel
@@ -115,6 +118,8 @@ src_prepare() {
 	eapply "${DISTDIR}/linux-${ASAHI_BASE_TAG}.diff"
 	eapply "${DISTDIR}/linux-${ASAHI_BASE_TAG}..${ASAHI_TAG}.diff"
 
+	eapply "${FILESDIR}/${PN}-7.0-config-gentoo-Drop-RANDSTRUCT-from-GENTOO_KERNEL_SEL.patch"
+
 	default
 
 	# add Gentoo patchset version
@@ -125,20 +130,47 @@ src_prepare() {
 
 	# prepare the default config
 	case ${ARCH} in
-		arm | hppa | loong | sparc)
+		hppa | mips)
 			> .config || die
 		;;
+		alpha)
+			cp "${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/config" .config || die
+			merge_configs+=(
+				"${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/alpha/config" \
+				"${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/alpha/config.alpha-smp"
+			)
+			;;
 		amd64)
 			cp "${WORKDIR}/kernel-${CONFIG_VER}/kernel-x86_64-fedora.config" .config || die
+			;;
+		arm)
+			cp "${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/config" .config || die
+			merge_configs+=(
+				"${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/armhf/config" \
+				"${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/armhf/config.armmp-lpae"
+			)
 			;;
 		arm64)
 			cp "${WORKDIR}/kernel-${CONFIG_VER}/kernel-aarch64-fedora.config" .config || die
 			biendian=true
 			;;
+		loong)
+			cp "${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/config" .config || die
+			merge_configs+=(
+				"${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/loong64/config"
+			)
+			;;
+		m68k)
+			cp "${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/config" .config || die
+			merge_configs+=(
+				"${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/m68k/config"
+			)
+			;;
 		ppc)
-			# assume powermac/powerbook defconfig
-			# we still package.use.force savedconfig
-			cp "arch/powerpc/configs/pmac32_defconfig" .config || die
+			cp "${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/config" .config || die
+			merge_configs+=(
+				"${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/powerpc/config.powerpc"
+			)
 			;;
 		ppc64)
 			cp "${WORKDIR}/kernel-${CONFIG_VER}/kernel-ppc64le-fedora.config" .config || die
@@ -146,6 +178,16 @@ src_prepare() {
 			;;
 		riscv)
 			cp "${WORKDIR}/kernel-${CONFIG_VER}/kernel-riscv64-fedora.config" .config || die
+			;;
+		s390)
+			cp "${WORKDIR}/kernel-${CONFIG_VER}/kernel-s390x-fedora.config" .config || die
+			;;
+		sparc)
+			cp "${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/config" .config || die
+			merge_configs+=(
+				"${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/sparc64/config.sparc64" \
+				"${WORKDIR}/linux-${DEBIAN_COMMIT}/debian/config/sparc64/config.sparc64-smp"
+			)
 			;;
 		x86)
 			cp "${WORKDIR}/kernel-${CONFIG_VER}/kernel-i686-fedora.config" .config || die
@@ -213,7 +255,7 @@ src_prepare() {
 }
 
 src_install() {
-	# call kernel-build's scr_install
+	# call kernel-build's src_install
 	kernel-build_src_install
 
 	# symlink installed *.dtbs back into kernel "source" directory

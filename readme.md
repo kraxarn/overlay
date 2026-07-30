@@ -6,7 +6,6 @@ Should probably be merged upstream, but I'm still learning how all this works
 * https://codeberg.org/gentoo/guru
 * https://codeberg.org/gentoo/gentoo
 * https://github.com/chadmed/asahi-overlay
-* https://github.com/ccharon/gentoo-local-repo
 * https://github.com/anyc/steam-overlay
 
 ## Changes
@@ -28,7 +27,7 @@ Should probably be merged upstream, but I'm still learning how all this works
 
 ### sys-kernel/asahi-kernel
 
-* Updated to the latest version.
+* Added build for fairydust patches.
 
 ### media-libs/libvpx
 
