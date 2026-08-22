@@ -22,15 +22,15 @@ PATCHSET=linux-gentoo-patches-${PATCH_PV}
 # forked to git.gentoo.org:fork/fedora/kernel
 CONFIG_VER=7.1.4-gentoo
 GENTOO_CONFIG_P=gentoo-kernel-config-g19
-SHA256SUM_DATE=20260724
+SHA256SUM_DATE=20260803
 # Debian kconfig commit from:
 # https://salsa.debian.org/kernel-team/linux/-/tree/debian/latest/debian/
-DEBIAN_COMMIT=bbe2e99bce4a7dffe34cf06303aec2fac49fbf56
+DEBIAN_COMMIT=2cba742ab58c8ee8ca715d02c0bdbf61ecbed1cc
 
 # asahi specific tag and version parsing
 ASAHI_TAGV=${PV#*_p}
 # ASAHI_TAG="asahi-${PATCH_PV}-${ASAHI_TAGV}"
-ASAHI_TAG=e3e35907c17a05773d481e58a566bf9108166cc5
+ASAHI_TAG=eb8089bbc11872c50fcf5138ff069d51b4ae996f
 
 # ASAHI_BASE is used for when there are multiple asahi tags for a specific
 # kernel release. If this is not the case comment "ASAHI_BASE=..." and all
@@ -60,15 +60,17 @@ SRC_URI+="
 			-> linux-$(ver_cut 1).x-sha256sums-${SHA256SUM_DATE}.asc
 	)
 "
-SRC_URI+="
-	https://github.com/AsahiLinux/linux/compare/${ASAHI_BASE_TAG}...${ASAHI_TAG}.diff
-		-> linux-${ASAHI_BASE_TAG}..${ASAHI_TAG}.diff
-"
+if [ ${ASAHI_BASE_TAG} != ${ASAHI_TAG} ]; then
+	SRC_URI+="
+		https://github.com/AsahiLinux/linux/compare/${ASAHI_BASE_TAG}...${ASAHI_TAG}.diff
+			-> linux-${ASAHI_BASE_TAG}..${ASAHI_TAG}.diff
+	"
+fi
 S=${WORKDIR}/${BASE_P}
 
 SLOT="asahi-${PV}"
 
-KEYWORDS="~arm64"
+KEYWORDS="arm64"
 IUSE="debug hardened"
 REQUIRED_USE="
 	hppa? ( savedconfig )
@@ -78,7 +80,7 @@ REQUIRED_USE="
 # Rust is non-negotiable for the dist kernel
 DEPEND="
 	${DEPEND}
-	|| ( sys-boot/m1n1 sys-boot/m1n1-bin )
+	|| ( sys-boot/m1n1-bin sys-boot/m1n1 )
 	sys-boot/u-boot
 "
 BDEPEND="
@@ -116,7 +118,9 @@ src_prepare() {
 	eapply "${WORKDIR}/${PATCHSET}"
 
 	eapply "${DISTDIR}/linux-${ASAHI_BASE_TAG}.diff"
-	eapply "${DISTDIR}/linux-${ASAHI_BASE_TAG}..${ASAHI_TAG}.diff"
+	if [ ${ASAHI_BASE_TAG} != ${ASAHI_TAG} ]; then
+		eapply "${DISTDIR}/linux-${ASAHI_BASE_TAG}..${ASAHI_TAG}.diff"
+	fi
 
 	eapply "${FILESDIR}/${PN}-7.0-config-gentoo-Drop-RANDSTRUCT-from-GENTOO_KERNEL_SEL.patch"
 
