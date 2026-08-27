@@ -17,12 +17,12 @@ inherit kernel-build rust toolchain-funcs verify-sig
 
 BASE_P=linux-${PV%.*}
 PATCH_PV=${PV%_p*}
-PATCHSET=linux-gentoo-patches-${PATCH_PV}
+PATCHSET=linux-gentoo-patches-7.1.6
 # https://koji.fedoraproject.org/koji/packageinfo?packageID=8
 # forked to git.gentoo.org:fork/fedora/kernel
 CONFIG_VER=7.1.4-gentoo
 GENTOO_CONFIG_P=gentoo-kernel-config-g19
-SHA256SUM_DATE=20260803
+SHA256SUM_DATE=20260809
 # Debian kconfig commit from:
 # https://salsa.debian.org/kernel-team/linux/-/tree/debian/latest/debian/
 DEBIAN_COMMIT=2cba742ab58c8ee8ca715d02c0bdbf61ecbed1cc
@@ -30,7 +30,7 @@ DEBIAN_COMMIT=2cba742ab58c8ee8ca715d02c0bdbf61ecbed1cc
 # asahi specific tag and version parsing
 ASAHI_TAGV=${PV#*_p}
 # ASAHI_TAG="asahi-${PATCH_PV}-${ASAHI_TAGV}"
-ASAHI_TAG=eb8089bbc11872c50fcf5138ff069d51b4ae996f
+ASAHI_TAG=96775a0e72995e79e13b93755d456cb128dcdc81
 
 # ASAHI_BASE is used for when there are multiple asahi tags for a specific
 # kernel release. If this is not the case comment "ASAHI_BASE=..." and all
