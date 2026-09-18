@@ -1,7 +1,7 @@
 diff --git a/toolkit/themes/shared/aboutNetError.css b/toolkit/themes/shared/aboutNetError.css
 --- a/toolkit/themes/shared/aboutNetError.css
 +++ b/toolkit/themes/shared/aboutNetError.css
-@@ -209,7 +209,7 @@
+@@ -298,7 +298,7 @@
    }
 
    .img-container > img {
@@ -30,22 +30,23 @@ diff --git a/toolkit/content/errors/net-error-illustrations.mjs b/toolkit/conten
 diff --git a/toolkit/content/net-error-card.mjs b/toolkit/content/net-error-card.mjs
 --- a/toolkit/content/net-error-card.mjs
 +++ b/toolkit/content/net-error-card.mjs
-@@ -1092,15 +1092,9 @@
+@@ -1428,15 +1428,9 @@
          aria-labelledby="error-title"
          aria-describedby="error-intro whatCanYouDo"
        >
--       ${src &&
--       html`
--         <div class="img-container">
--           <img
--             src=${src}
--             ${alt && `data-l10n-id=${alt} data-l10n-attrs="alt"`}
--           />
--         </div>
--       `}
+-        ${src &&
+-        html`
+-          <div class="img-container">
+-            <img
+-              src=${src}
+-              ${alt && `data-l10n-id=${alt} data-l10n-attrs="alt"`}
+-            />
+-          </div>
+-        `}
 +        <div class="img-container">
 +          <img src=${src} class=${ifDefined(className)} alt=${alt} />
 +        </div>
-         <div class="container">
-           ${this.showCustomNetErrorCard
-             ? html`${this.customNetErrorContainerTemplate()}`
+         <div class="container">${this.containerContentTemplate(title)}</div>
+       </article>`;
+   }
+
