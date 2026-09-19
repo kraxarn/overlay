@@ -36,3 +36,7 @@ Should probably be merged upstream, but I'm still learning how all this works
 ### games-util/steam-launcher
 
 * Removed 32-bit dependencies (for SteamRt3)
+
+### media-sound/lilypond
+
+* Updated to the latest version.
