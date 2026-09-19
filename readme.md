@@ -40,3 +40,7 @@ Should probably be merged upstream, but I'm still learning how all this works
 ### media-sound/lilypond
 
 * Updated to the latest version.
+
+### app-emulation/box64
+
+* Updated to the latest version.
